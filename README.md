@@ -3,8 +3,6 @@ dirSync
 
 A simple library for directory synchronization by a given JSON string with an option of a simple actions.
 
-Info about Sleeping barber problem: http://en.wikipedia.org/wiki/Sleeping_barber_problem
-
 Installation:
 --------------
     $ git clone https://github.com/tomasvalek/dirSync.git
