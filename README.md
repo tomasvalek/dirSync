@@ -8,7 +8,8 @@ Installation:
     $ git clone https://github.com/tomasvalek/dirSync.git
 
 Requirement:
-    PHP TODO
+    PHP 5.3+ (namespace \)
+	permissions for write for creating folders
 
 Using:
 -------------
