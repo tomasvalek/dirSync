@@ -12,6 +12,7 @@ Requirement:
 
 Using:
 -------------
+```javascript
 {
     /**
      * will create a directory "src" 
@@ -52,4 +53,5 @@ Using:
      * directory which is not in JSON will be removed
      */
 }
+```
 
