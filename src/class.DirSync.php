@@ -112,7 +112,12 @@ class DirSync implements DirSyncInterface {
 	 * @return string Return a string JSON data.
 	 */
 	public function getJsonInput(){
-		//TODO
+
+		$json = json_encode($this->json, JSON_PRETTY_PRINT);
+		if($json === FALSE)
+			throw new Exception("JSON encode fail.");
+
+		return $json;
 	}
 
 
@@ -155,7 +160,7 @@ class DirSync implements DirSyncInterface {
 			$rm->removeDir($this->rootDir);
 		} else if ($options == self::SYNC_ACTIONS_ONLY){
 			$this->createTree("", $this->json);
-		} else {
+		} else { //without options
 			/**
 			 * directory which is not in JSON will be removed
 			 */
@@ -188,9 +193,9 @@ class DirSync implements DirSyncInterface {
 				//creating folder without $dirName, because it is action
 				//if more '/' in path does not matter
 				//if file already exists does not matter
-				if($options != self::SYNC_ACTIONS_ONLY){
+				if($this->options != self::SYNC_ACTIONS_ONLY){
 					(new \DirSync\Action\MkDir())->makeDir($this->rootDir."/".$prefix);
-					echo "Creating: ".$this->rootDir."/".$prefix."<br>";	//DEBUG
+					//echo "Creating: ".$this->rootDir."/".$prefix."<br>";	//DEBUG
 				}
 
 				//TODO check action and execute
@@ -198,11 +203,11 @@ class DirSync implements DirSyncInterface {
 			}
 
 			//Directory:
-			if(!is_array($value) && ){ //not an array
+			if(!is_array($value) && $this->options != self::SYNC_ACTIONS_ONLY){ //not an array
 				//if more '/' in path does not matter
 				//if file already exists does not matter
 				(new \DirSync\Action\MkDir())->makeDir($this->rootDir."/".$prefix."/".$dirName);
-				echo "Creating: ".$this->rootDir."/".$prefix."/".$dirName."<br><br>";	//DEBUG
+				//echo "Creating: ".$this->rootDir."/".$prefix."/".$dirName."<br><br>";	//DEBUG
 			} else { //is array
 
 				$this->createTree($prefix."/".$dirName, $value);
