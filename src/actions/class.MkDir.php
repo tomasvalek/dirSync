@@ -16,15 +16,20 @@ class MkDir implements MkDirInterface {
 	/** Make directory.
 	 * @param string $dirName
 	 * @throws \Exception
-	 * @return void.
+	 * @return self
 	 */
 	public function makeDir($dirName){
 
 		if (!file_exists($dirName)) {
 			$ret = mkdir($dirName, 0777, true);
+			
 			if($ret === FALSE)
-				throw new Exception("Make directory fail.");
+				throw new \Exception("Make directory fail.");
+			
+			//echo "Creating: ".$dirName."<br><br>";	//DEBUG TODO
 		}
+		
+		return $this;
 	}
 
 }

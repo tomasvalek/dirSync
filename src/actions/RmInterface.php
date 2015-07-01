@@ -10,17 +10,17 @@ interface RmInterface {
 
     public function __construct();
 
-    /** Remove dir(s).
-	 * @param string $dirName A valid path to a existing directory.
+    /** Remove dir(s) or file.
+	 * @param string A valid path to a existing directory.
 	 * @throws \Exception
-	 * @return void.
+	 * @return self
 	 */
-	public function removeDir($dirName);
+	public function remove($dirOrFile);
 
 	/** Remove file.
-	 * @param string $fileName A valid path to a existing file.
+	 * @param string A valid path to a existing file.
 	 * @throws \Exception
-	 * @return void.
+	 * @return self
 	 */
 	public function removeFile($fileName);
 }

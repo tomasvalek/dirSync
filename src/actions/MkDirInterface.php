@@ -13,7 +13,7 @@ interface MkDirInterface {
     /** Make directory.
 	 * @param string $dirName
 	 * @throws \Exception
-	 * @return void.
+	 * @return self
 	 */
 	public function makeDir($dirName);
 

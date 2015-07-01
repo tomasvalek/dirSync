@@ -13,40 +13,46 @@ class Rm implements RmInterface {
 	/** Constructor.*/
 	public function __construct(){}
 
-	/** Remove dir(s).
-	 * @param string $dirName A valid path to a existing directory.
+	/** Remove dir(s) or file.
+	 * @param string A valid path to a existing directory.
 	 * @throws \Exception
-	 * @return void.
+	 * @return self.
 	 */
-	public function removeDir($dirName){
+	public function remove($dirOrFile){
 
-		if (file_exists($dirName)) {
-
-			$listOfFiles = scandir($dirName); //get list of all files
-
-			if($listOfFiles === FALSE)
-				throw new \Exception("Remove directory failed.");
-
-			//get all the entries from $listOfFiles that are not present in any of the other arrays. 
-			$files = array_diff($listOfFiles, array('.','..'));
-
-			foreach ($files as $file) {
-				if(is_dir("$dirName/$file")){
-					$this->removeDir("$dirName/$file");
-				} else {
-					$this->removeFile("$dirName/$file");
+		if (file_exists($dirOrFile)) {
+			
+			if(is_dir($dirOrFile)){ //Directory
+				$listOfFiles = scandir($dirOrFile); //get list of all files
+				
+				if($listOfFiles === FALSE)
+					throw new \Exception("Remove directory failed.");
+				
+				$files = array_diff($listOfFiles, array('.','..'));
+				
+				foreach ($files as $file) {
+					if(is_dir("$dirOrFile/$file")){ //directory
+						$this->remove("$dirOrFile/$file");
+					} else { //file
+						$this->removeFile("$dirOrFile/$file");
+					}
 				}
+				
+				if(rmdir($dirOrFile) === FALSE)
+					throw new \Exception("Remove directory failed.");
+				
+			} else if (is_file($dirOrFile)){ //File
+				$this->removeFile($dirOrFile);
 			}
-
-			if(rmdir($dirName) === FALSE)
-				throw new \Exception("Remove directory failed.");
 		}
+		
+		return $this;
 	}
 
 	/** Remove file.
-	 * @param string $fileName A valid path to a existing file.
+	 * @param string A valid path to a existing file.
 	 * @throws \Exception
-	 * @return void.
+	 * @return self.
 	 */
 	public function removeFile($fileName){
 
@@ -55,6 +61,8 @@ class Rm implements RmInterface {
 			if(unlink($fileName) === FALSE)
 				throw new \Exception("Remove directory failed.");
 		}
+		
+		return $this;
 	}
 
 }
