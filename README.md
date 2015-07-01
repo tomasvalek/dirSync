@@ -5,7 +5,7 @@ A simple library for directory synchronization by a given JSON string with an op
 
 Installation:
 --------------
-    $ git clone https://github.com/tomasvalek/dirSync.git
+    $ git clone git://github.com/tomasvalek/dirSync.git
 
 Requirement:     
     PHP 5.3+ (namespaces)     
